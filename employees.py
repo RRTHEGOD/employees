@@ -32,8 +32,6 @@ PERCENTAGE_MIN = 0
 SALARY_ERROR_MESSAGE = "Salary must be non-negative."
 
 
-# TODO: implement this class. You may delete this comment when you are done.
-
 class Employee(ABC):
     """
     Abstract base class representing a generic employee in the system.
@@ -47,8 +45,8 @@ class Employee(ABC):
         self.is_employed = True
         self.__name = name
         self.__manager = manager
-        self.performance = INITIAL_PERFORMANCE
-        self.happiness = INITIAL_HAPPINESS
+        self._performance = INITIAL_PERFORMANCE  # Initialize performance here
+        self._happiness = INITIAL_HAPPINESS  # Initialize happiness here
         self.salary = salary
 
     @property
@@ -120,7 +118,6 @@ class Manager(Employee):
 
     def __init__(self, name, salary, savings):
         super().__init__(name, None, salary, savings)  # Managers do not have a manager.
-        self.bonus = MANAGER_BONUS
 
     def work(self):
         performance_change = random.randint(-5, 5)
@@ -132,9 +129,6 @@ class Manager(Employee):
                 self.relationships[employee_name] -= 1
         else:
             self.happiness += 1
-
-    def calculate_salary(self):
-        return self.salary + self.bonus
 
 
 class TemporaryEmployee(Employee):
