@@ -57,3 +57,53 @@ class Employee:
         if not isinstance(other_employee, Employee):
             return
         self.relationships[other_employee.name] = self.relationships.get(other_employee.name, 0) + 1
+
+
+class Manager(Employee):
+    def __init__(self, name, manager, salary, savings):
+        super().__init__(name, manager, salary, savings)
+        self.relationships = {}
+        self.performance = min(100, max(0, self.performance))
+    
+    @property
+    def salary(self):
+        return self._salary
+    
+    @salary.setter
+    def salary(self, value):
+        if value < 0:
+            raise ValueError("Salary cannot be negative.")
+        self._salary = value
+    
+    @property
+    def performance(self):
+        return self._performance
+    
+    @performance.setter
+    def performance(self, value):
+        self._performance = min(max(0, value), 100)
+
+    def work(self):
+        self.performance += random.randint(-10, 10)
+    
+    def daily_expense(self):
+        super().daily_expense()
+
+
+class TemporaryEmployee(Employee):
+    def __init__(self, name, manager, salary, savings):
+        super().__init__(name, manager, salary, savings)
+
+    def work(self):
+        self.performance += random.randint(-10, 10)
+    
+    def interact(self, other_employee):
+        super().interact(other_employee)
+
+
+class PermanentEmployee(Employee):
+    def __init__(self, name, manager, salary, savings):
+        super().__init__(name, manager, salary, savings)
+
+    def work(self):
+        self.performance += random.randint(-5, 5)
